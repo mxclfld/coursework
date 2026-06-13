@@ -19,9 +19,9 @@ async function main() {
 
   const farmManager = await prisma.user.upsert({
     where: { username: 'farm.manager' },
-    update: {},
+    update: { fullName: 'Керівник ферми' },
     create: {
-      fullName: 'Farm Manager',
+      fullName: 'Керівник ферми',
       username: 'farm.manager',
       passwordHash,
       role: UserRole.FARM_MANAGER,
@@ -30,9 +30,9 @@ async function main() {
 
   const agronomist = await prisma.user.upsert({
     where: { username: 'agronomist1' },
-    update: {},
+    update: { fullName: 'Головний агроном' },
     create: {
-      fullName: 'Primary Agronomist',
+      fullName: 'Головний агроном',
       username: 'agronomist1',
       passwordHash,
       role: UserRole.AGRONOMIST,
@@ -41,9 +41,9 @@ async function main() {
 
   const salesManager = await prisma.user.upsert({
     where: { username: 'sales.manager' },
-    update: {},
+    update: { fullName: 'Менеджер з продажу' },
     create: {
-      fullName: 'Sales Manager',
+      fullName: 'Менеджер з продажу',
       username: 'sales.manager',
       passwordHash,
       role: UserRole.SALES_MANAGER,
@@ -52,81 +52,106 @@ async function main() {
 
   const field = await prisma.field.upsert({
     where: { id: '00000000-0000-4000-8000-000000000001' },
-    update: {},
+    update: {
+      name: 'Північне поле',
+      location: 'Північний район',
+      description: 'Основне пшеничне поле',
+    },
     create: {
       id: '00000000-0000-4000-8000-000000000001',
-      name: 'North Field',
+      name: 'Північне поле',
       area: 100,
-      location: 'North District',
+      location: 'Північний район',
       availableArea: 80,
-      description: 'Primary wheat field',
+      description: 'Основне пшеничне поле',
     },
   });
 
   const crop = await prisma.crop.upsert({
     where: { id: '00000000-0000-4000-8000-000000000002' },
-    update: {},
+    update: {
+      name: 'Озима пшениця',
+      type: 'Зернові',
+      description: 'Високоврожайна озима пшениця',
+    },
     create: {
       id: '00000000-0000-4000-8000-000000000002',
-      name: 'Winter Wheat',
-      type: 'Cereal',
-      description: 'High-yield winter wheat',
+      name: 'Озима пшениця',
+      type: 'Зернові',
+      description: 'Високоврожайна озима пшениця',
     },
   });
 
   const workType = await prisma.agriculturalWork.upsert({
     where: { id: '00000000-0000-4000-8000-000000000003' },
-    update: {},
+    update: {
+      workType: 'Оранка',
+      description: 'Підготовка ґрунту',
+    },
     create: {
       id: '00000000-0000-4000-8000-000000000003',
-      workType: 'Plowing',
-      description: 'Soil preparation',
+      workType: 'Оранка',
+      description: 'Підготовка ґрунту',
     },
   });
 
   const machinery = await prisma.machinery.upsert({
     where: { inventoryNumber: 'TR-001' },
-    update: {},
+    update: {
+      name: 'Трактор модель X',
+      equipmentType: 'Трактор',
+      purpose: 'Польові роботи',
+    },
     create: {
-      name: 'Tractor Model X',
+      name: 'Трактор модель X',
       inventoryNumber: 'TR-001',
-      equipmentType: 'Tractor',
-      purpose: 'Field operations',
+      equipmentType: 'Трактор',
+      purpose: 'Польові роботи',
       status: MachineryStatus.AVAILABLE,
     },
   });
 
   const supplier = await prisma.supplier.upsert({
     where: { id: '00000000-0000-4000-8000-000000000004' },
-    update: {},
+    update: {
+      name: 'АгроПостач ТОВ',
+      address: 'Київ, Україна',
+    },
     create: {
       id: '00000000-0000-4000-8000-000000000004',
-      name: 'AgroSupply LLC',
+      name: 'АгроПостач ТОВ',
       contactNumber: '+380501234567',
-      address: 'Kyiv, Ukraine',
+      address: 'Київ, Україна',
     },
   });
 
   const fertilizer = await prisma.fertilizer.upsert({
     where: { id: '00000000-0000-4000-8000-000000000005' },
-    update: {},
+    update: {
+      name: 'NPK 20-20-20',
+      type: 'Комплексне',
+      description: 'Збалансоване добриво',
+    },
     create: {
       id: '00000000-0000-4000-8000-000000000005',
       name: 'NPK 20-20-20',
-      type: 'Complex',
-      unit: 'kg',
-      description: 'Balanced fertilizer',
+      type: 'Комплексне',
+      unit: 'кг',
+      description: 'Збалансоване добриво',
     },
   });
 
   const buyer = await prisma.buyer.upsert({
     where: { id: '00000000-0000-4000-8000-000000000006' },
-    update: {},
+    update: {
+      name: 'Зерноторгівельна компанія',
+      address: 'Одеса, Україна',
+    },
     create: {
       id: '00000000-0000-4000-8000-000000000006',
-      name: 'Grain Trading Co.',
+      name: 'Зерноторгівельна компанія',
       contactNumber: '+380671112233',
-      address: 'Odesa, Ukraine',
+      address: 'Одеса, Україна',
     },
   });
 
@@ -146,14 +171,14 @@ async function main() {
 
   const workRecord = await prisma.workRecord.upsert({
     where: { id: '00000000-0000-4000-8000-000000000008' },
-    update: {},
+    update: { description: 'Початкову оранку завершено' },
     create: {
       id: '00000000-0000-4000-8000-000000000008',
       fieldId: field.id,
       agriculturalWorkId: workType.id,
       machineryId: machinery.id,
       completionDate: new Date('2026-03-10'),
-      description: 'Initial plowing completed',
+      description: 'Початкову оранку завершено',
       createdById: agronomist.id,
     },
   });
@@ -190,13 +215,13 @@ async function main() {
     where: {
       cropId_fieldId: { cropId: crop.id, fieldId: field.id },
     },
-    update: {},
+    update: { unit: 'т' },
     create: {
       cropId: crop.id,
       fieldId: field.id,
       totalQuantity: 1000,
       availableBalance: 1000,
-      unit: 'ton',
+      unit: 'т',
     },
   });
 
@@ -223,12 +248,12 @@ async function main() {
     data: { availableBalance: 900 },
   });
 
-  console.log('Seed completed successfully');
-  console.log('Default users (password: password123):');
+  console.log('Сідування успішно завершено');
+  console.log('Користувачі за замовчуванням (пароль: password123):');
   console.log('- farm.manager (FARM_MANAGER)');
   console.log('- agronomist1 (AGRONOMIST)');
   console.log('- sales.manager (SALES_MANAGER)');
-  console.log('Farm manager id:', farmManager.id);
+  console.log('ID керівника ферми:', farmManager.id);
 }
 
 main()
