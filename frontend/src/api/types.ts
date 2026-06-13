@@ -82,7 +82,7 @@ export interface AgriculturalWork {
   updatedAt?: string
 }
 
-export interface Техніка {
+export interface Machinery {
   id: string
   name: string
   inventoryNumber: string
@@ -103,7 +103,7 @@ export interface WorkRecord {
   createdById: string
   field?: Field
   agriculturalWork?: AgriculturalWork
-  machinery?: Техніка | null
+  machinery?: Machinery | null
   createdBy?: Pick<User, "id" | "fullName">
   createdAt?: string
   updatedAt?: string
@@ -115,7 +115,7 @@ export interface MachineryUsage {
   workRecordId: string
   usageDate: string
   operatingHours: string | number
-  machinery?: Техніка
+  machinery?: Machinery
   workRecord?: WorkRecord
   createdAt?: string
   updatedAt?: string
@@ -131,7 +131,7 @@ export interface Supplier {
   updatedAt?: string
 }
 
-export interface Добриво {
+export interface Fertilizer {
   id: string
   name: string
   type: string
@@ -152,13 +152,13 @@ export interface FertilizerPurchase {
   paymentStatus: PaymentStatus
   createdById: string
   supplier?: Supplier
-  fertilizer?: Добриво
+  fertilizer?: Fertilizer
   createdBy?: Pick<User, "id" | "fullName">
   createdAt?: string
   updatedAt?: string
 }
 
-export interface Покупець {
+export interface Buyer {
   id: string
   name: string
   contactNumber?: string | null
@@ -177,7 +177,7 @@ export interface Sale {
   totalAmount: string | number
   saleDate: string
   createdById: string
-  buyer?: Покупець
+  buyer?: Buyer
   crop?: Crop
   field?: Field
   createdBy?: Pick<User, "id" | "fullName">

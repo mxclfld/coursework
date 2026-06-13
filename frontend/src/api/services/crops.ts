@@ -1,5 +1,5 @@
 import { createCrudService } from "@/api/client"
-import type { Культура } from "@/api/types"
+import type { Crop } from "@/api/types"
 
 export interface CropQueryParams {
   search?: string

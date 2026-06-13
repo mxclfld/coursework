@@ -1,5 +1,5 @@
 import { createCrudService } from "@/api/client"
-import type { Добриво } from "@/api/types"
+import type { Fertilizer } from "@/api/types"
 
 export interface FertilizerQueryParams {
   search?: string

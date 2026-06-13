@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
 
-import type { Поле } from "@/api/types"
+import type { Field } from "@/api/types"
 import { fieldsService } from "@/api/services/fields"
 import { DataTable } from "@/components/data-table/data-table"
 import { PaginationControls } from "@/components/data-table/pagination"
@@ -47,8 +47,8 @@ function FieldsPage() {
   const [search, setSearch] = useState("")
   const [location, setLocation] = useState("")
   const [open, setOpen] = useState(false)
-  const [editing, setEditing] = useState<Поле | null>(null)
-  const [deleting, setDeleting] = useState<Поле | null>(null)
+  const [editing, setEditing] = useState<Field | null>(null)
+  const [deleting, setDeleting] = useState<Field | null>(null)
 
   const params = useMemo(
     () => ({ page, limit: 10, search: search || undefined, location: location || undefined }),

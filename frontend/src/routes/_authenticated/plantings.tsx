@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { formatDate, formatNumber } from "@/lib/format"
+import { formatDate, formatEnumLabel, formatNumber } from "@/lib/format"
 import { canWritePlantings } from "@/lib/permissions"
 import { useAuthStore } from "@/stores/auth-store"
 

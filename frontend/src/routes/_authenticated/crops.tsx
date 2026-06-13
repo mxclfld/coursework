@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
 
-import type { Культура } from "@/api/types"
+import type { Crop } from "@/api/types"
 import { cropsService } from "@/api/services/crops"
 import { DataTable } from "@/components/data-table/data-table"
 import { PaginationControls } from "@/components/data-table/pagination"
@@ -37,8 +37,8 @@ function CropsPage() {
   const [search, setSearch] = useState("")
   const [type, setType] = useState("")
   const [open, setOpen] = useState(false)
-  const [editing, setEditing] = useState<Культура | null>(null)
-  const [deleting, setDeleting] = useState<Культура | null>(null)
+  const [editing, setEditing] = useState<Crop | null>(null)
+  const [deleting, setDeleting] = useState<Crop | null>(null)
   const params = useMemo(() => ({ page, limit: 10, search: search || undefined, type: type || undefined }), [page, search, type])
   const { data, isLoading, error, refetch } = useQuery({ queryKey: ["crops", params], queryFn: () => cropsService.getAll(params) })
   const form = useForm<z.infer<typeof schema>>({ resolver: formResolver(schema), defaultValues: { name: "", type: "", description: "" } })

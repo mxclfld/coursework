@@ -27,8 +27,8 @@ function DialogPortal({
 
 function DialogClose({
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Закрити>) {
-  return <DialogPrimitive.Закрити data-slot="dialog-close" {...props} />
+}: React.ComponentProps<typeof DialogPrimitive.Close>) {
+  return <DialogPrimitive.Close data-slot="dialog-close" {...props} />
 }
 
 function DialogOverlay({
@@ -68,7 +68,7 @@ function DialogContent({
       >
         {children}
         {showCloseButton && (
-          <DialogPrimitive.Закрити data-slot="dialog-close" asChild>
+          <DialogPrimitive.Close data-slot="dialog-close" asChild>
             <Button
               variant="ghost"
               className="absolute top-2 right-2"
@@ -78,7 +78,7 @@ function DialogContent({
               />
               <span className="sr-only">Закрити</span>
             </Button>
-          </DialogPrimitive.Закрити>
+          </DialogPrimitive.Close>
         )}
       </DialogPrimitive.Content>
     </DialogPortal>
@@ -114,9 +114,9 @@ function DialogFooter({
     >
       {children}
       {showCloseButton && (
-        <DialogPrimitive.Закрити asChild>
+        <DialogPrimitive.Close asChild>
           <Button variant="outline">Закрити</Button>
-        </DialogPrimitive.Закрити>
+        </DialogPrimitive.Close>
       )}
     </div>
   )
@@ -141,9 +141,9 @@ function DialogTitle({
 function DialogDescription({
   className,
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Опис>) {
+}: React.ComponentProps<typeof DialogPrimitive.Description>) {
   return (
-    <DialogPrimitive.Опис
+    <DialogPrimitive.Description
       data-slot="dialog-description"
       className={cn(
         "text-sm text-muted-foreground *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground",

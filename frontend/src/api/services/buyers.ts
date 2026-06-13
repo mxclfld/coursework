@@ -1,5 +1,5 @@
 import { api, createCrudService } from "@/api/client"
-import type { Покупець, Sale } from "@/api/types"
+import type { Buyer, Sale } from "@/api/types"
 
 export interface BuyerQueryParams {
   search?: string

@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
 
-import type { Техніка, MachineryStatus } from "@/api/types"
+import type { Machinery, MachineryStatus } from "@/api/types"
 import { machineryService } from "@/api/services/machinery"
 import { DataTable } from "@/components/data-table/data-table"
 import { PaginationControls } from "@/components/data-table/pagination"
@@ -43,8 +43,8 @@ function MachineryPage() {
   const [page, setPage] = useState(1)
   const [search, setSearch] = useState("")
   const [open, setOpen] = useState(false)
-  const [editing, setEditing] = useState<Техніка | null>(null)
-  const [deleting, setDeleting] = useState<Техніка | null>(null)
+  const [editing, setEditing] = useState<Machinery | null>(null)
+  const [deleting, setDeleting] = useState<Machinery | null>(null)
   const params = useMemo(() => ({ page, limit: 10, search: search || undefined }), [page, search])
   const { data, isLoading, error, refetch } = useQuery({ queryKey: ["machinery", params], queryFn: () => machineryService.getAll(params) })
   const form = useForm<z.infer<typeof schema>>({ resolver: formResolver(schema), defaultValues: { name: "", inventoryNumber: "", equipmentType: "", purpose: "", status: "AVAILABLE" } })

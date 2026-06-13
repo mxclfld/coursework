@@ -1,5 +1,5 @@
 import { api, createCrudService } from "@/api/client"
-import type { Поле, Planting, WorkRecord } from "@/api/types"
+import type { Field, Planting, WorkRecord } from "@/api/types"
 
 export interface FieldQueryParams {
   search?: string

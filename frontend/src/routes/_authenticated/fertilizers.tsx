@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
 
-import type { Добриво } from "@/api/types"
+import type { Fertilizer } from "@/api/types"
 import { fertilizersService } from "@/api/services/fertilizers"
 import { DataTable } from "@/components/data-table/data-table"
 import { PaginationControls } from "@/components/data-table/pagination"
@@ -37,8 +37,8 @@ function FertilizersPage() {
   const [page, setPage] = useState(1)
   const [search, setSearch] = useState("")
   const [open, setOpen] = useState(false)
-  const [editing, setEditing] = useState<Добриво | null>(null)
-  const [deleting, setDeleting] = useState<Добриво | null>(null)
+  const [editing, setEditing] = useState<Fertilizer | null>(null)
+  const [deleting, setDeleting] = useState<Fertilizer | null>(null)
   const params = useMemo(() => ({ page, limit: 10, search: search || undefined }), [page, search])
   const { data, isLoading, error, refetch } = useQuery({ queryKey: ["fertilizers", params], queryFn: () => fertilizersService.getAll(params) })
   const form = useForm<z.infer<typeof schema>>({ resolver: formResolver(schema), defaultValues: { name: "", type: "", unit: "", description: "" } })
