@@ -160,7 +160,7 @@ function FertilizerPurchasesPage() {
         columns={[
           {
             key: "supplier",
-            header: "Supplier",
+            header: "Постачальник",
             cell: (r) => r.supplier?.name ?? r.supplierId,
           },
           {
@@ -247,7 +247,7 @@ function FertilizerPurchasesPage() {
           <DialogContent>
             <Stack spacing={2} sx={{ mt: 1 }}>
               <FormControl fullWidth>
-                <InputLabel>Supplier</InputLabel>
+                <InputLabel>Постачальник</InputLabel>
                 <Select
                   label="Постачальник"
                   value={form.watch("supplierId")}
@@ -306,7 +306,7 @@ function FertilizerPurchasesPage() {
                 >
                   {paymentStatuses.map((s) => (
                     <MenuItem key={s} value={s}>
-                      {s}
+                      {formatEnumLabel(s)}
                     </MenuItem>
                   ))}
                 </Select>

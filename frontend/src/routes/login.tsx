@@ -63,8 +63,8 @@ function LoginPage() {
         <CardHeader>
           <CardTitle>Управління фермою</CardTitle>
           <CardDescription>
-            Увійдіть у свій обліковий запис. Demo users: agronomist1, sales.manager,
-            farm.manager (password: password123)
+            Увійдіть у свій обліковий запис. Демо: agronomist1 / sales.manager /
+            farm.manager — password123
           </CardDescription>
         </CardHeader>
         <CardContent>

@@ -93,7 +93,7 @@ function MachineryUsagePage() {
                 <SelectContent>{workRecordsData?.items.map((w) => <SelectItem key={w.id} value={w.id}>{w.field?.name ?? w.id.slice(0, 8)} - {formatDate(w.completionDate)}</SelectItem>)}</SelectContent>
               </Select>
             </FormField>
-            <FormField label="Usage date" htmlFor="usageDate"><Input id="usageDate" type="date" {...form.register("usageDate")} /></FormField>
+            <FormField label="Дата використання" htmlFor="usageDate"><Input id="usageDate" type="date" {...form.register("usageDate")} /></FormField>
             <FormField label="Години роботи" htmlFor="operatingHours"><Input id="operatingHours" type="number" step="0.01" {...form.register("operatingHours")} /></FormField>
             <DialogFooter><Button type="submit" disabled={saveMutation.isPending}>Зберегти</Button></DialogFooter>
           </form>

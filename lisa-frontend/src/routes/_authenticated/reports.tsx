@@ -232,7 +232,7 @@ function ReportsPage() {
           columns={[
             {
               key: "supplier",
-              header: "Supplier",
+              header: "Постачальник",
               cell: (r) => r.supplier?.name ?? "—",
             },
             {

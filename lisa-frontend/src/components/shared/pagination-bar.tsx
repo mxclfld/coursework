@@ -21,6 +21,10 @@ export function PaginationBar({
       rowsPerPage={rowsPerPage}
       onPageChange={(_, newPage) => onPageChange(newPage + 1)}
       rowsPerPageOptions={[rowsPerPage]}
+      labelRowsPerPage="Рядків на сторінку:"
+      labelDisplayedRows={({ from, to, count }) =>
+        `${from}–${to} з ${count !== -1 ? count : `більше ніж ${to}`}`
+      }
     />
   )
 }

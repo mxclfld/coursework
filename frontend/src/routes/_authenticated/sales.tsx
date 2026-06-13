@@ -111,7 +111,7 @@ function SalesPage() {
             <FormField label="Продана кількість" htmlFor="quantitySold"><Input id="quantitySold" type="number" step="0.01" {...form.register("quantitySold")} /></FormField>
             <FormField label="Ціна за одиницю" htmlFor="unitPrice"><Input id="unitPrice" type="number" step="0.01" {...form.register("unitPrice")} /></FormField>
             <p className="text-sm text-muted-foreground">Разом: {formatCurrency(previewTotal || 0)}</p>
-            <FormField label="Sale date" htmlFor="saleDate"><Input id="saleDate" type="date" {...form.register("saleDate")} /></FormField>
+            <FormField label="Дата продажу" htmlFor="saleDate"><Input id="saleDate" type="date" {...form.register("saleDate")} /></FormField>
             <DialogFooter><Button type="submit" disabled={saveMutation.isPending}>Зберегти</Button></DialogFooter>
           </form>
         </DialogContent>

@@ -5,7 +5,7 @@ import { useAuthStore } from "@/stores/auth-store"
 export const api = axios.create({
   baseURL: "/api",
   headers: {
-    "Content-Тип": "application/json",
+    "Content-Type": "application/json",
   },
 })
 
@@ -22,9 +22,6 @@ api.interceptors.response.use(
   (error: AxiosError<{ message?: string | string[] }>) => {
     if (error.response?.status === 401) {
       useAuthStore.getState().logout()
-      if (window.location.pathname !== "/login") {
-        window.location.href = "/login"
-      }
     }
 
     const message = error.response?.data?.message

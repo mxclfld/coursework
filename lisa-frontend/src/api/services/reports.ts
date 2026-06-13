@@ -43,6 +43,6 @@ export const reportsService = {
   getHarvest: (params?: { cropId?: string; fieldId?: string }) =>
     api.get<never, HarvestStock[]>("/reports/harvest", { params }),
 
-  getПанель керування: (params?: DateRangeQuery) =>
+  getDashboard: (params?: DateRangeQuery) =>
     api.get<never, DashboardResponse>("/reports/dashboard", { params }),
 }

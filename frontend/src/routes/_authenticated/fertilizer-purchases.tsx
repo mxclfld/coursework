@@ -74,7 +74,7 @@ function FertilizerPurchasesPage() {
     <div>
       <PageHeader title="Закупівлі добрив" description="Записи закупівель та статус оплати" action={canWrite ? { label: "Додати закупівлю", onClick: () => { setEditing(null); form.reset({ supplierId: "", fertilizerId: "", quantity: 0, unitPrice: 0, purchaseDate: "", paymentStatus: "PENDING" }); setOpen(true) } } : undefined} />
       <DataTable columns={[
-        { key: "supplier", header: "Supplier", cell: (r) => r.supplier?.name ?? r.supplierId },
+        { key: "supplier", header: "Постачальник", cell: (r) => r.supplier?.name ?? r.supplierId },
         { key: "fertilizer", header: "Добриво", cell: (r) => r.fertilizer?.name ?? r.fertilizerId },
         { key: "qty", header: "К-сть", cell: (r) => formatNumber(r.quantity) },
         { key: "total", header: "Разом", cell: (r) => formatCurrency(r.totalAmount) },
@@ -97,7 +97,7 @@ function FertilizerPurchasesPage() {
         <DialogContent>
           <DialogHeader><DialogTitle>{editing ? "Редагувати закупівлю" : "Створити закупівлю"}</DialogTitle></DialogHeader>
           <form className="space-y-4" onSubmit={form.handleSubmit((v) => saveMutation.mutate(v))}>
-            <FormField label="Supplier" htmlFor="supplierId">
+            <FormField label="Постачальник" htmlFor="supplierId">
               <Select value={form.watch("supplierId")} onValueChange={(v) => form.setValue("supplierId", v)}>
                 <SelectTrigger><SelectValue placeholder="Оберіть постачальника" /></SelectTrigger>
                 <SelectContent>{suppliersData?.items.map((s) => <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>)}</SelectContent>

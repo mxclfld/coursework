@@ -171,7 +171,7 @@ function ReportsPage() {
               <ReportTable
                 query={purchasesQuery}
                 columns={[
-                  { key: "supplier", header: "Supplier", cell: (r) => r.supplier?.name ?? "—" },
+                  { key: "supplier", header: "Постачальник", cell: (r) => r.supplier?.name ?? "—" },
                   { key: "fertilizer", header: "Добриво", cell: (r) => r.fertilizer?.name ?? "—" },
                   { key: "total", header: "Разом", cell: (r) => formatCurrency(r.totalAmount) },
                   { key: "date", header: "Дата", cell: (r) => formatDate(r.purchaseDate) },

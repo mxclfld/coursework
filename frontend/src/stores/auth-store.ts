@@ -19,7 +19,14 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       isAuthenticated: false,
       login: (token, user) => set({ token, user, isAuthenticated: true }),
-      logout: () => set({ token: null, user: null, isAuthenticated: false }),
+      logout: () => {
+        set({ token: null, user: null, isAuthenticated: false })
+        void import("@/router").then(({ router }) => {
+          if (router.state.location.pathname !== "/login") {
+            void router.navigate({ to: "/login", replace: true })
+          }
+        })
+      },
       setUser: (user) => set({ user }),
     }),
     {
