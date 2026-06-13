@@ -1,0 +1,255 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  AGRONOMIST
+  SALES_MANAGER
+  FARM_MANAGER
+}
+
+enum PlantingStatus {
+  PLANNED
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+}
+
+enum MachineryStatus {
+  AVAILABLE
+  IN_USE
+  MAINTENANCE
+  OUT_OF_SERVICE
+}
+
+enum PaymentStatus {
+  PENDING
+  PARTIAL
+  PAID
+}
+
+model User {
+  id           String   @id @default(uuid())
+  fullName     String
+  username     String   @unique
+  passwordHash String
+  role         UserRole
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  plantings           Planting[]
+  workRecords         WorkRecord[]
+  fertilizerPurchases FertilizerPurchase[]
+  sales               Sale[]
+}
+
+model Field {
+  id            String   @id @default(uuid())
+  name          String
+  area          Decimal  @db.Decimal(12, 2)
+  location      String
+  availableArea Decimal  @db.Decimal(12, 2)
+  description   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  plantings     Planting[]
+  workRecords   WorkRecord[]
+  sales         Sale[]
+  harvestStocks HarvestStock[]
+}
+
+model Crop {
+  id          String   @id @default(uuid())
+  name        String
+  type        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  plantings     Planting[]
+  sales         Sale[]
+  harvestStocks HarvestStock[]
+}
+
+model Planting {
+  id           String         @id @default(uuid())
+  fieldId      String
+  cropId       String
+  plantingDate DateTime       @db.Date
+  plantedArea  Decimal        @db.Decimal(12, 2)
+  status       PlantingStatus @default(PLANNED)
+  createdById  String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  field     Field @relation(fields: [fieldId], references: [id], onDelete: Restrict)
+  crop      Crop  @relation(fields: [cropId], references: [id], onDelete: Restrict)
+  createdBy User  @relation(fields: [createdById], references: [id], onDelete: Restrict)
+
+  @@index([fieldId])
+  @@index([cropId])
+  @@index([plantingDate])
+}
+
+model AgriculturalWork {
+  id          String   @id @default(uuid())
+  workType    String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  workRecords WorkRecord[]
+}
+
+model Machinery {
+  id              String          @id @default(uuid())
+  name            String
+  inventoryNumber String          @unique
+  equipmentType   String
+  purpose         String?
+  status          MachineryStatus @default(AVAILABLE)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  workRecords    WorkRecord[]
+  machineryUsage MachineryUsage[]
+}
+
+model WorkRecord {
+  id                 String   @id @default(uuid())
+  fieldId            String
+  agriculturalWorkId String
+  machineryId        String?
+  completionDate     DateTime @db.Date
+  description        String?
+  createdById        String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  field            Field            @relation(fields: [fieldId], references: [id], onDelete: Restrict)
+  agriculturalWork AgriculturalWork @relation(fields: [agriculturalWorkId], references: [id], onDelete: Restrict)
+  machinery        Machinery?       @relation(fields: [machineryId], references: [id], onDelete: SetNull)
+  createdBy        User             @relation(fields: [createdById], references: [id], onDelete: Restrict)
+  machineryUsage   MachineryUsage[]
+
+  @@index([fieldId])
+  @@index([completionDate])
+}
+
+model MachineryUsage {
+  id             String   @id @default(uuid())
+  machineryId    String
+  workRecordId   String
+  usageDate      DateTime @db.Date
+  operatingHours Decimal  @db.Decimal(10, 2)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  machinery  Machinery  @relation(fields: [machineryId], references: [id], onDelete: Restrict)
+  workRecord WorkRecord @relation(fields: [workRecordId], references: [id], onDelete: Cascade)
+
+  @@index([machineryId])
+  @@index([workRecordId])
+}
+
+model Supplier {
+  id             String   @id @default(uuid())
+  name           String
+  contactNumber  String?
+  address        String?
+  additionalInfo String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  fertilizerPurchases FertilizerPurchase[]
+}
+
+model Fertilizer {
+  id          String   @id @default(uuid())
+  name        String
+  type        String
+  unit        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  fertilizerPurchases FertilizerPurchase[]
+}
+
+model FertilizerPurchase {
+  id            String        @id @default(uuid())
+  supplierId    String
+  fertilizerId  String
+  quantity      Decimal       @db.Decimal(12, 2)
+  unitPrice     Decimal       @db.Decimal(12, 2)
+  totalAmount   Decimal       @db.Decimal(14, 2)
+  purchaseDate  DateTime      @db.Date
+  paymentStatus PaymentStatus @default(PENDING)
+  createdById   String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  supplier   Supplier   @relation(fields: [supplierId], references: [id], onDelete: Restrict)
+  fertilizer Fertilizer @relation(fields: [fertilizerId], references: [id], onDelete: Restrict)
+  createdBy  User       @relation(fields: [createdById], references: [id], onDelete: Restrict)
+
+  @@index([supplierId])
+  @@index([purchaseDate])
+}
+
+model Buyer {
+  id            String   @id @default(uuid())
+  name          String
+  contactNumber String?
+  address       String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  sales Sale[]
+}
+
+model Sale {
+  id           String   @id @default(uuid())
+  buyerId      String
+  cropId       String
+  fieldId      String
+  quantitySold Decimal  @db.Decimal(12, 2)
+  unitPrice    Decimal  @db.Decimal(12, 2)
+  totalAmount  Decimal  @db.Decimal(14, 2)
+  saleDate     DateTime @db.Date
+  createdById  String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  buyer     Buyer @relation(fields: [buyerId], references: [id], onDelete: Restrict)
+  crop      Crop  @relation(fields: [cropId], references: [id], onDelete: Restrict)
+  field     Field @relation(fields: [fieldId], references: [id], onDelete: Restrict)
+  createdBy User  @relation(fields: [createdById], references: [id], onDelete: Restrict)
+
+  @@index([buyerId])
+  @@index([saleDate])
+}
+
+model HarvestStock {
+  id               String   @id @default(uuid())
+  cropId           String
+  fieldId          String
+  totalQuantity    Decimal  @db.Decimal(12, 2)
+  availableBalance Decimal  @db.Decimal(12, 2)
+  unit             String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  crop  Crop  @relation(fields: [cropId], references: [id], onDelete: Restrict)
+  field Field @relation(fields: [fieldId], references: [id], onDelete: Restrict)
+
+  @@unique([cropId, fieldId])
+  @@index([cropId])
+  @@index([fieldId])
+}
